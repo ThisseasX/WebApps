@@ -151,20 +151,16 @@
 <div class="container-fluid">
 
   <div class="row">
-
     <div class="jumbotron">
       <h1>Nerd Elections 2018</h1>
     </div>
-
   </div>
 
   <div class="row">
-
     <div class="panel panel-login col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
-
       <div class="panel-heading">
-        <div class="row">
 
+        <div class="row">
           <div class="col-xs-6">
             <a href="#" class="active" id="login-form-link">Login</a>
           </div>
@@ -172,7 +168,6 @@
           <div class="col-xs-6">
             <a href="#" id="register-form-link">Register</a>
           </div>
-
         </div>
         <hr>
       </div>
@@ -249,14 +244,12 @@
   </div>
 
   <div class="row">
-
     <% String error = (String) request.getAttribute("error"); %>
     <h3 id="error" class="text-center text-danger">
       <strong>
         <%= error != null ? error : ""%>
       </strong>
     </h3>
-
   </div>
 
 </div>

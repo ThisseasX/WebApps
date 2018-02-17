@@ -25,27 +25,55 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
           integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
           crossorigin="anonymous"></script>
+  <style>
+    #header {
+      margin-top: 30px;
+      margin-bottom: 50px;
+      font-family: "Arial Black", sans-serif;
+      text-align: center;
+    }
+
+    .jumbotron {
+      background: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg) no-repeat;
+      background-size: cover;
+      text-align: center;
+      font-family: "Arial Black", sans-serif;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
 <%
-  Voter v = (Voter) session.getAttribute("voter");
+  HttpSession httpSession = request.getSession(false);
+  Voter v = (Voter) httpSession.getAttribute("voter");
 %>
 
 
 <%
+  if (v == null) {
+      response.sendRedirect("/index.jsp");
+      return;
+  }
   List<Candidate> list = CandidateUtils.getAvailableCandidates(v);
 %>
 
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <h1 class="col-md-6 col-md-offset-3" style="margin-top: 30px; margin-bottom: 50px">Login Successful: Welcome <%=v.getName()%>!</h1>
+    <div class="jumbotron">
+      <h1>Nerd Elections 2018</h1>
+    </div>
   </div>
+
   <div class="row">
-    <div class="col-md-12">
+    <h1 id="header" class="text-success">Welcome <%=v.getName()%>!</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
 
       <div class="table-responsive">
-        <table id="mytable" class="table table-bordred table-striped table-hover">
+        <table id="mytable" class="table table-bordered table-striped table-hover">
 
           <thead>
           <tr>
