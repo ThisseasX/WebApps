@@ -176,7 +176,7 @@
         <div class="row">
           <div class="col-lg-12">
 
-            <form id="login-form" action="LoginServlet" method="post" role="form" style="display: block;">
+            <form id="login-form" action="login" method="post" role="form" style="display: block;">
 
               <div class="form-group">
                 <input pattern="[0-9]{1,15}" required type="number" name="login-afm" id="login-afm" tabindex="1"
@@ -199,7 +199,7 @@
 
             </form>
 
-            <form id="register-form" action="RegisterServlet" method="post" role="form" style="display: none;">
+            <form id="register-form" action="register" method="post" role="form" style="display: none;">
 
               <div class="form-group">
                 <input pattern="[0-9]{1,15}" required type="text" name="register-afm" id="register-afm" tabindex="1"
@@ -208,12 +208,12 @@
               </div>
 
               <div class="form-group">
-                <input pattern=".{1,30}" required type="text" name="name" id="name" tabindex="2"
+                <input pattern="[A-Za-z]{1,30}" required type="text" name="name" id="name" tabindex="2"
                        class="form-control" placeholder="Name">
               </div>
 
               <div class="form-group">
-                <input pattern=".{1,30}" required type="text" name="surname" id="surname" tabindex="2"
+                <input pattern="[A-Za-z]{1,30}" required type="text" name="surname" id="surname" tabindex="2"
                        class="form-control"
                        placeholder="Surname">
               </div>

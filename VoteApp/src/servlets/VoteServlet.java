@@ -1,6 +1,6 @@
 package servlets;
 
-import utils.CandidateUtils;
+import utils.VoterUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "VoteServlet", urlPatterns = {"/VoteServlet"})
+@WebServlet(name = "VoteServlet", urlPatterns = {"/vote"})
 public class VoteServlet extends HttpServlet {
 
     @SuppressWarnings("unused")
@@ -29,7 +29,9 @@ public class VoteServlet extends HttpServlet {
             String c_afm = request.getParameter("c_afm");
             int vote = Integer.parseInt(request.getParameter("vote"));
 
-            if (CandidateUtils.vote(v_afm, c_afm, vote)) {
+            if (VoterUtils.vote(v_afm, c_afm, vote)) {
+                response.sendRedirect("jsp/LoginSuccess.jsp");
+            } else {
                 response.sendRedirect("jsp/LoginSuccess.jsp");
             }
 

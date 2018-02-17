@@ -1,6 +1,7 @@
 <%@ page import="models.Candidate" %>
 <%@ page import="models.Voter" %>
 <%@ page import="utils.CandidateUtils" %>
+<%@ page import="utils.VoterUtils" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: thiss
@@ -40,6 +41,43 @@
       font-family: "Arial Black", sans-serif;
       font-weight: bold;
     }
+
+    #myInput {
+      width: 100%; /* Full-width */
+      font-size: 16px; /* Increase font-size */
+      padding: 12px 20px 12px 40px; /* Add some padding */
+      border: 1px solid #ddd; /* Add a grey border */
+      margin-bottom: 12px; /* Add some space below the input */
+    }
+
+    .inner-addon {
+      position: relative;
+    }
+
+    /* style icon */
+    .inner-addon .glyphicon {
+      position: absolute;
+      padding: 10px;
+      pointer-events: none;
+    }
+
+    /* align icon */
+    .left-addon .glyphicon {
+      left: 0;
+    }
+
+    .right-addon .glyphicon {
+      right: 0;
+    }
+
+    /* add padding  */
+    .left-addon input {
+      padding-left: 30px;
+    }
+
+    .right-addon input {
+      padding-right: 30px;
+    }
   </style>
 </head>
 
@@ -52,8 +90,8 @@
 
 <%
   if (v == null) {
-      response.sendRedirect("/index.jsp");
-      return;
+    response.sendRedirect("/index.jsp");
+    return;
   }
   List<Candidate> list = CandidateUtils.getAvailableCandidates(v);
 %>
@@ -73,7 +111,18 @@
     <div class="col-md-6 col-md-offset-3">
 
       <div class="table-responsive">
-        <table id="mytable" class="table table-bordered table-striped table-hover">
+
+        <%
+          if (list.size() > 0 && VoterUtils.canVote(v.getAfm())) {
+        %>
+
+        <div class="inner-addon left-addon">
+          <i class="glyphicon glyphicon-search"></i>
+          <input type="text" id="myInput" class="form-control" title="search" onkeyup="myFilter()"
+                 placeholder="Filter by surname...">
+        </div>
+
+        <table id="myTable" class="table table-bordered table-striped table-hover">
 
           <thead>
           <tr>
@@ -101,11 +150,11 @@
             </td>
             <td>
               <p data-placement="top" data-toggle="tooltip" title="vote">
-                <button onclick="post('/VoteServlet',{v_afm: <%=v.getAfm()%>, c_afm: <%=c.getAfm()%>, vote: 1},'post')"
+                <button onclick="post('/vote',{v_afm: <%=v.getAfm()%>, c_afm: <%=c.getAfm()%>, vote: 1},'post')"
                         class="btn btn-primary" data-title="yes">
                   <span class="glyphicon glyphicon-thumbs-up"></span>
                 </button>
-                <button onclick="post('/VoteServlet',{v_afm: <%=v.getAfm()%>, c_afm: <%=c.getAfm()%>, vote: -1},'post')"
+                <button onclick="post('/vote',{v_afm: <%=v.getAfm()%>, c_afm: <%=c.getAfm()%>, vote: -1},'post')"
                         class="btn btn-danger" data-title="no">
                   <span class="glyphicon glyphicon-thumbs-down"></span>
                 </button>
@@ -118,6 +167,14 @@
 
           </tbody>
         </table>
+
+        <%
+        } else {
+        %>
+        <h1 class="text-center text-danger"><strong>You've reached your voting limit!</strong></h1>
+        <%
+          }
+        %>
 
         <div class="clearfix"></div>
       </div>
@@ -211,6 +268,27 @@
 
         document.body.appendChild(form);
         form.submit();
+    }
+
+    function myFilter() {
+        // Declare variables
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
     }
 </script>
 

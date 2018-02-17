@@ -8,8 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,27 +46,5 @@ public class CandidateUtils {
             e.printStackTrace();
         }
         return list;
-    }
-
-    public static boolean vote(String v_afm, String c_afm, int vote) {
-        String sql = "INSERT INTO votes VALUES(?,?,?,?);";
-
-        try (Connection con = DBUtils.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String date = now.format(formatter);
-
-            ps.setString(1, v_afm);
-            ps.setString(2, c_afm);
-            ps.setString(3, date);
-            ps.setInt(4, vote);
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 }
