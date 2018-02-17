@@ -1,5 +1,7 @@
 package servlets;
 
+import utils.CandidateUtils;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "SampleServlet", urlPatterns = {"/SampleServlet"})
-public class SampleServlet extends HttpServlet {
+@WebServlet(name = "VoteServlet", urlPatterns = {"/VoteServlet"})
+public class VoteServlet extends HttpServlet {
 
     @SuppressWarnings("unused")
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -19,10 +21,18 @@ public class SampleServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>SampleServlet</title>");
+            out.println("<title>VoteServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Hello World!</h1>");
+
+            String v_afm = request.getParameter("v_afm");
+            String c_afm = request.getParameter("c_afm");
+            int vote = Integer.parseInt(request.getParameter("vote"));
+
+            if (CandidateUtils.vote(v_afm, c_afm, vote)) {
+                response.sendRedirect("jsp/LoginSuccess.jsp");
+            }
+
             out.println("</body>");
             out.println("</html>");
         }

@@ -1,6 +1,6 @@
 package servlets;
 
-import models.VoterModel;
+import models.Voter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,11 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "VoteRegisterServlet", urlPatterns = {"/VoteRegisterServlet"})
-public class VoteRegisterServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
+public class LoginServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -21,24 +22,24 @@ public class VoteRegisterServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>VoteRegisterServlet</title>");
+            out.println("<title>LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
 
-            VoterModel vm = new VoterModel(
-                    request.getParameter("rafm"),
-                    request.getParameter("name"),
-                    request.getParameter("surname")
+            Voter v = new Voter(
+                    request.getParameter("login-afm")
             );
 
-            boolean isRegisterSuccessful = vm.register(request.getParameter("rpassword"));
+            boolean loginSuccessful = v.login(request.getParameter("login-password"));
 
-            if (isRegisterSuccessful) {
-                RequestDispatcher rd = request.getRequestDispatcher("/jsp/RegisterSuccess.jsp");
+            if (loginSuccessful) {
+                HttpSession session = request.getSession();
+                session.setAttribute("voter", v);
+                RequestDispatcher rd = request.getRequestDispatcher("/jsp/LoginSuccess.jsp");
                 rd.forward(request, response);
             } else {
-                request.setAttribute("error", "Registration Failed");
-                RequestDispatcher rd = request.getRequestDispatcher("/jsp/index.jsp");
+                request.setAttribute("error", "Login Failed");
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                 rd.forward(request, response);
             }
 

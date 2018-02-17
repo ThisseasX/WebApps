@@ -8,23 +8,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class VoterModel {
+@SuppressWarnings("unused")
+public class Voter {
 
     private String afm;
     private String name;
     private String surname;
-    private String password;
 
-    public VoterModel(String afm, String name, String surname, String password) {
+    public Voter(String afm, String name, String surname) {
         this.afm = afm;
         this.name = name;
         this.surname = surname;
-        this.password = password;
     }
 
-    public VoterModel(String afm, String password) {
+    public Voter(String afm) {
         this.afm = afm;
-        this.password = password;
     }
 
     public String getAfm() {
@@ -51,16 +49,9 @@ public class VoterModel {
         this.surname = surname;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    public boolean register(String password) {
+        String sql = "INSERT INTO voters VALUES (?,?,?,?)";
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean insertIntoDatabase() {
-        String sql = "INSERT INTO votes.voters VALUES (?,?,?,?)";
         try (Connection con = DBUtils.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -76,10 +67,11 @@ public class VoterModel {
         return false;
     }
 
-    public boolean login() {
-        String sql = "SELECT vname, vsurname FROM votes.voters WHERE vafm=? AND vpassword=?";
+    public boolean login(String password) {
+        String sql = "SELECT v_name, v_surname FROM voters WHERE v_afm=? AND BINARY v_password=?";
+
         try (Connection con = DBUtils.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);) {
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, afm);
             ps.setString(2, password);

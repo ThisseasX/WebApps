@@ -1,12 +1,13 @@
 package models;
 
-public class CandidateModel {
+@SuppressWarnings("unused")
+public class Candidate {
 
     private String afm;
     private String name;
     private String surname;
 
-    public CandidateModel(String afm, String name, String surname) {
+    public Candidate(String afm, String name, String surname) {
         this.afm = afm;
         this.name = name;
         this.surname = surname;
@@ -34,5 +35,10 @@ public class CandidateModel {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + surname;
     }
 }
