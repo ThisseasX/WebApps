@@ -6,6 +6,7 @@ public class Candidate {
     private String afm;
     private String name;
     private String surname;
+    private int votes;
 
     public Candidate(String afm, String name, String surname) {
         this.afm = afm;
@@ -35,6 +36,14 @@ public class Candidate {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public int getVotes() {
+        return votes;
+    }
+
+    public void setVotes(int votes) {
+        this.votes = votes;
     }
 
     @Override

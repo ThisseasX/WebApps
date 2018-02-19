@@ -1,4 +1,8 @@
-package utils;
+package services;
+
+import models.Candidate;
+import models.Voter;
+import utils.DBUtils;
 
 import javax.naming.NamingException;
 import java.sql.Connection;
@@ -7,8 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-public class VoterUtils {
+public class VoterService {
 
     public static boolean canVote(String afm) {
         String sql = "SELECT count(*) FROM votes WHERE v_afm = ?";
@@ -31,7 +36,7 @@ public class VoterUtils {
 
     public static boolean vote(String v_afm, String c_afm, int vote) {
         if (canVote(v_afm)) {
-            String sql = "INSERT INTO votes VALUES(?,?,?,?);";
+            String sql = "INSERT INTO votes VALUES(?,?,?,?)";
 
             try (Connection con = DBUtils.getConnection();
                  PreparedStatement ps = con.prepareStatement(sql)) {
@@ -51,5 +56,16 @@ public class VoterUtils {
             }
         }
         return false;
+    }
+
+    public static List<Candidate> getVoteHistory(Voter v) {
+        //language=MySQL
+        String sql = "" +
+                "SELECT " + CandidateService.SQL_CANDIDATE + ", vote " +
+                "FROM candidates " +
+                CandidateService.SQL_JOIN_VOTES + " " +
+                "WHERE votes.v_afm = ?";
+
+        return CandidateService.getCandidateList(v, sql);
     }
 }

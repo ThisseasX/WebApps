@@ -1,31 +1,24 @@
 package servlets;
 
-import services.VoterService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "VoteServlet", urlPatterns = {"/vote"})
-public class VoteServlet extends HttpServlet {
+@WebServlet(name = "LogoutServlet", urlPatterns = {"/logout"})
+public class LogoutServlet extends HttpServlet {
 
-    @SuppressWarnings("unused")
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String v_afm = request.getParameter("v_afm");
-        String c_afm = request.getParameter("c_afm");
-        int vote = Integer.parseInt(request.getParameter("vote"));
-
-        if (VoterService.vote(v_afm, c_afm, vote)) {
-            response.sendRedirect("jsp/vote.jsp");
-        } else {
-            response.sendRedirect("jsp/vote.jsp");
-        }
+        HttpSession session = request.getSession(false);
+        if (session != null)
+            session.invalidate();
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     @Override
