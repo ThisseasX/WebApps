@@ -1,6 +1,7 @@
 package servlets;
 
 import models.Voter;
+import services.VoterService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,7 +31,7 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        boolean loginSuccessful = v.login(request.getParameter("login-password"));
+        boolean loginSuccessful = VoterService.login(v, request.getParameter("login-password"));
 
         if (loginSuccessful) {
             HttpSession session = request.getSession();

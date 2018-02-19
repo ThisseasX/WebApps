@@ -15,6 +15,46 @@ import java.util.List;
 
 public class VoterService {
 
+    public static boolean register(Voter v, String password) {
+        String sql = "INSERT INTO voters VALUES (?,?,?,?)";
+
+        try (Connection con = DBUtils.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, v.getAfm());
+            ps.setString(2, v.getName());
+            ps.setString(3, v.getSurname());
+            ps.setString(4, password);
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean login(Voter v, String password) {
+        String sql = "SELECT v_name, v_surname FROM voters WHERE v_afm=? AND BINARY v_password=?";
+
+        try (Connection con = DBUtils.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, v.getName());
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                v.setName(rs.getString(1));
+                v.setSurname(rs.getString(2));
+                return true;
+            }
+
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static boolean canVote(String afm) {
         String sql = "SELECT count(*) FROM votes WHERE v_afm = ?";
 

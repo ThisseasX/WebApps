@@ -1,6 +1,7 @@
 package servlets;
 
 import models.Voter;
+import services.VoterService;
 import utils.StringUtils;
 
 import javax.servlet.RequestDispatcher;
@@ -25,7 +26,7 @@ public class RegisterServlet extends HttpServlet {
                 StringUtils.capitalize(request.getParameter("surname"))
         );
 
-        boolean isRegisterSuccessful = v.register(request.getParameter("register-password"));
+        boolean isRegisterSuccessful = VoterService.register(v, request.getParameter("register-password"));
 
         if (isRegisterSuccessful) {
             HttpSession session = request.getSession();
