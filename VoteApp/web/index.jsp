@@ -120,7 +120,7 @@
             <form id="register-form" action="register" method="post" role="form" style="display: none;">
 
               <div class="form-group">
-                <input pattern="[0-9]{1,15}" required type="text" name="register-afm" id="register-afm" tabindex="1"
+                <input pattern="[0-9]{1,15}" required type="number" name="register-afm" id="register-afm" tabindex="1"
                        class="form-control"
                        placeholder="AFM">
               </div>
