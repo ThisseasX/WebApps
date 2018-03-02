@@ -3,18 +3,27 @@ package entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "candidates", schema = "voteapp", catalog = "")
+@Table(name = "candidates", schema = "voteapp")
 public class CandidatesEntity {
+
     private int cAfm;
     private String cName;
     private String cSurname;
+
+    public CandidatesEntity() {
+    }
+
+    public CandidatesEntity(int cAfm, String cName, String cSurname) {
+        this.cAfm = cAfm;
+        this.cName = cName;
+        this.cSurname = cSurname;
+    }
 
     @Id
     @Column(name = "c_afm")
     public int getcAfm() {
         return cAfm;
     }
-
     public void setcAfm(int cAfm) {
         this.cAfm = cAfm;
     }
@@ -24,7 +33,6 @@ public class CandidatesEntity {
     public String getcName() {
         return cName;
     }
-
     public void setcName(String cName) {
         this.cName = cName;
     }
@@ -34,7 +42,6 @@ public class CandidatesEntity {
     public String getcSurname() {
         return cSurname;
     }
-
     public void setcSurname(String cSurname) {
         this.cSurname = cSurname;
     }
@@ -46,11 +53,9 @@ public class CandidatesEntity {
 
         CandidatesEntity that = (CandidatesEntity) o;
 
-        if (cAfm != that.cAfm) return false;
-        if (cName != null ? !cName.equals(that.cName) : that.cName != null) return false;
-        if (cSurname != null ? !cSurname.equals(that.cSurname) : that.cSurname != null) return false;
-
-        return true;
+        return cAfm == that.cAfm &&
+                (cName != null ? cName.equals(that.cName) : that.cName == null) &&
+                (cSurname != null ? cSurname.equals(that.cSurname) : that.cSurname == null);
     }
 
     @Override

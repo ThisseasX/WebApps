@@ -3,19 +3,29 @@ package entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "voters", schema = "voteapp", catalog = "")
+@Table(name = "voters", schema = "voteapp")
 public class VotersEntity {
+
     private int vAfm;
     private String vName;
     private String vSurname;
     private String vPassword;
+
+    public VotersEntity() {
+    }
+
+    public VotersEntity(int vAfm, String vName, String vSurname, String vPassword) {
+        this.vAfm = vAfm;
+        this.vName = vName;
+        this.vSurname = vSurname;
+        this.vPassword = vPassword;
+    }
 
     @Id
     @Column(name = "v_afm")
     public int getvAfm() {
         return vAfm;
     }
-
     public void setvAfm(int vAfm) {
         this.vAfm = vAfm;
     }
@@ -25,7 +35,6 @@ public class VotersEntity {
     public String getvName() {
         return vName;
     }
-
     public void setvName(String vName) {
         this.vName = vName;
     }
@@ -35,7 +44,6 @@ public class VotersEntity {
     public String getvSurname() {
         return vSurname;
     }
-
     public void setvSurname(String vSurname) {
         this.vSurname = vSurname;
     }
@@ -45,7 +53,6 @@ public class VotersEntity {
     public String getvPassword() {
         return vPassword;
     }
-
     public void setvPassword(String vPassword) {
         this.vPassword = vPassword;
     }
@@ -57,12 +64,10 @@ public class VotersEntity {
 
         VotersEntity that = (VotersEntity) o;
 
-        if (vAfm != that.vAfm) return false;
-        if (vName != null ? !vName.equals(that.vName) : that.vName != null) return false;
-        if (vSurname != null ? !vSurname.equals(that.vSurname) : that.vSurname != null) return false;
-        if (vPassword != null ? !vPassword.equals(that.vPassword) : that.vPassword != null) return false;
-
-        return true;
+        return vAfm == that.vAfm &&
+                (vName != null ? vName.equals(that.vName) : that.vName == null) &&
+                (vSurname != null ? vSurname.equals(that.vSurname) : that.vSurname == null) &&
+                (vPassword != null ? vPassword.equals(that.vPassword) : that.vPassword == null);
     }
 
     @Override

@@ -5,7 +5,7 @@
   Time: 9:23 μμ
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -28,6 +28,7 @@
   <style>
     html, body {
       height: 100%;
+      background-color: #f1f1f1;
     }
 
     html {
@@ -49,6 +50,18 @@
       margin: 2px;
     }
 
+    label {
+      margin-right: 10px;
+    }
+
+    [type="submit"] {
+      margin-top: 20px;
+    }
+
+    h1 {
+      font-weight: bold;
+    }
+
   </style>
 </head>
 <body>
@@ -62,34 +75,42 @@
 
       <div class="panel panel-default">
         <div class="panel-header">
-          <h1 class="text-center">Register</h1>
+          <h1 class="text-center">Register Voter</h1>
         </div>
         <div class="panel-body">
           <form class="form-group" action="${pageContext.request.contextPath}/db" method="post">
             <table>
               <tr>
-                <td><label for="c_afm">AFM</label></td>
-                <td><input class="form-control" id="c_afm" name="c_afm"></td>
+                <td><label for="afm">AFM</label></td>
+                <td><input class="form-control" id="afm" name="afm"></td>
               </tr>
               <tr>
-                <td><label for="c_name">Name</label></td>
-                <td><input class="form-control" id="c_name" name="c_name"></td>
+                <td><label for="name">Name</label></td>
+                <td><input class="form-control" id="name" name="name"></td>
               </tr>
               <tr>
-                <td><label for="c_surname">Surname</label></td>
-                <td><input class="form-control" id="c_surname" name="c_surname"></td>
+                <td><label for="surname">Surname</label></td>
+                <td><input class="form-control" id="surname" name="surname"></td>
+              </tr>
+              <tr>
+                <td><label for="password">Password</label></td>
+                <td><input class="form-control" id="password" name="password"></td>
               </tr>
               <tr>
                 <td></td>
-                <td><input class="form-control btn btn-primary" type="submit"></td>
+                <td><input class="form-control btn btn-primary" type="submit" value="Submit"></td>
               </tr>
             </table>
           </form>
         </div>
+        <%--end panel--%>
       </div>
+      <%--end div--%>
 
     </div>
+    <%--end row--%>
   </div>
+  <%--end container--%>
 </div>
 
 </body>
