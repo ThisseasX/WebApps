@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+@SuppressWarnings({"unused", "ResultOfMethodCallIgnored"})
 @WebServlet(name = "FileUploadServlet", urlPatterns = "/upload")
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024,
@@ -25,32 +27,48 @@ import java.sql.SQLException;
 )
 public class FileUploadServlet extends HttpServlet {
 
-    private static final String UPLOAD_DIR = "uploads";
-    private static final String UPLOAD_PATH = "C:\\my_uploads\\";
+    private static final String UPLOAD_DIR = "c:\\uploads";
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
+        System.out.println("MY UPLOAD DIR IS: " + UPLOAD_DIR);
+
         final Part filePart = request.getPart("file");
-        final String fileName = filePart.getSubmittedFileName();
 
-        String applicationPath = request.getServletContext().getRealPath("");
-        String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
-        System.out.println(uploadFilePath);
+        insertFileToDatabase(filePart);
+        saveFileToDisk(filePart);
+    }
 
-        String myFileName = UPLOAD_PATH + fileName;
-        filePart.write(myFileName);
+    private void saveFileToDisk(Part filePart) {
+        String fileName = filePart.getSubmittedFileName();
 
-        File f = new File(myFileName);
-        FileInputStream fis = new FileInputStream(f);
+        File dir = new File(UPLOAD_DIR);
+        File file = new File(dir, fileName);
 
-        String sql = "INSERT INTO file VALUES (?)";
-        try (Connection con = DBUtils.getConnection();
+        dir.mkdir();
+
+        try (InputStream input = filePart.getInputStream()) {
+
+            if (!file.exists()) {
+                Files.copy(input, file.toPath());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void insertFileToDatabase(Part filePart) {
+        String sql = "INSERT INTO file (file) VALUES (?)";
+
+        try (InputStream input = filePart.getInputStream();
+             Connection con = DBUtils.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setBlob(1, fis);
+            ps.setBlob(1, input);
             ps.executeUpdate();
 
-        } catch (SQLException | NamingException e) {
+        } catch (SQLException | NamingException | IOException e) {
             e.printStackTrace();
         }
     }
