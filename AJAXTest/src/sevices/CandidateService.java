@@ -4,6 +4,10 @@ import models.Candidate;
 import utils.DBUtils;
 
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,5 +41,13 @@ public class CandidateService {
         }
 
         return list;
+    }
+
+    public static List<Candidate> getAllCandidateEntities(String s) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("VoteApp");
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Candidate> query = em.createNamedQuery(Candidate.GET_ALL, Candidate.class);
+        query.setParameter("s", s + "%");
+        return query.getResultList();
     }
 }

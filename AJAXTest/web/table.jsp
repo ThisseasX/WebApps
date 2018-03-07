@@ -35,7 +35,7 @@
     <th>Surname</th>
   </tr>
 
-  <% List<Candidate> list = CandidateService.getAllCandidates(request.getParameter("q"));
+  <% List<Candidate> list = CandidateService.getAllCandidateEntities(request.getParameter("q"));
     pageContext.setAttribute("list", list);
   %>
 
