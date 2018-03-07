@@ -20,6 +20,7 @@ import java.util.List;
 @WebServlet(name = "Servlet", urlPatterns = "/test")
 public class Servlet extends HttpServlet {
 
+    @SuppressWarnings("unused")
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
@@ -53,6 +54,7 @@ public class Servlet extends HttpServlet {
         }
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static String readUrl(String urlString) throws Exception {
         BufferedReader reader = null;
         try {
