@@ -30,9 +30,7 @@
 
 <table class='table table-bordered table-hover'>
   <tr>
-    <th>AFM</th>
     <th>Name</th>
-    <th>Surname</th>
   </tr>
 
   <% List<Candidate> list = CandidateService.getAllCandidateEntities(request.getParameter("q"));
@@ -40,13 +38,34 @@
   %>
 
   <c:forEach var="c" items="${list}">
-    <tr>
-      <td>${c.id}</td>
+    <tr onmouseenter="showCandidate('${c.id}','${c.name}','${c.surname}')" onmouseleave="hideCandidate()">
       <td>${c.name}</td>
-      <td>${c.surname}</td>
     </tr>
   </c:forEach>
 
 </table>
+
+<p class="well" id="result" style="display: none">
+
+</p>
+
+<script>
+
+    function showCandidate(id, name, surname) {
+        $("#result")
+            .append(id + " ")
+            .append(name + " ")
+            .append(surname + " ")
+            .show();
+    }
+
+    function hideCandidate() {
+        $("#result")
+            .empty()
+            .hide();
+    }
+
+</script>
+
 </body>
 </html>
