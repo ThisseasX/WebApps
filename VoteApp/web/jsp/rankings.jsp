@@ -1,7 +1,5 @@
-<%@ page import="models.Candidate" %>
-<%@ page import="models.Voter" %>
-<%@ page import="services.CandidateService" %>
-<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://example.com/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: thiss
@@ -13,176 +11,94 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>VoteApp - My Votes</title>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"> -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-          integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-          crossorigin="anonymous"></script>
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css"/>
+  <%@include file="/reusables/header.jspf" %>
 </head>
 
 <body>
-<%
-  HttpSession httpSession = request.getSession(false);
-  Voter v = (Voter) httpSession.getAttribute("voter");
-%>
 
+<c:catch>
+  <jsp:useBean id="voter" scope="session" type="models.Voter"/>
+</c:catch>
 
-<%
-  if (v == null) {
-    response.sendRedirect("/index.jsp");
-    return;
-  }
-  List<Candidate> list = CandidateService.getRankings();
-%>
+<c:choose>
+  <c:when test="${voter eq null}">
+    <c:redirect url="/index.jsp"/>
+  </c:when>
+  <c:otherwise>
+    <c:set var="list" scope="page" value="${f:getRankings()}"/>
+  </c:otherwise>
+</c:choose>
 
-<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-              data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="${pageContext.request.contextPath}/login">#NerdElections</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li>
-          <a href="vote.jsp">Vote</a>
-        </li>
-        <li>
-          <a href="history.jsp">My Votes</a>
-        </li>
-        <li class="active">
-          <a href="rankings.jsp">Rankings</a>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <p class="navbar-text">Hello <strong style="margin-left: 5px"><%=v.getName()%>
-          </strong></p>
-        </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/logout">
-            <b>Logout</b>
-          </a>
-        </li>
-
-      </ul>
-    </div>
-    <!-- /.navbar-collapse -->
-  </div>
-  <!-- /.container-fluid -->
-</nav>
+<%@include file="/reusables/navbar.jspf" %>
 
 <div class="container-fluid bg">
 
-  <div class="row">
-    <div class="jumbotron">
-      <div class="container col-md-8 col-md-offset-2"
-           style="background-color: rgba(0,0,0,0.5); margin-top: 20px; margin-bottom: 40px">
-        <h1 style="margin: 10px">Nerd Elections 2018</h1>
-      </div>
-    </div>
-  </div>
+  <%@include file="/reusables/jumbotron.jspf" %>
 
-  <%
-    if (list.size() > 0) {
-  %>
+  <c:choose>
+    <c:when test="${list.size() gt 0}">
 
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="inner-addon left-addon">
-        <i class="glyphicon glyphicon-search"></i>
-        <input type="text" id="myInput" class="form-control" title="search" onkeyup="myFilter()"
-               placeholder="Filter by surname...">
-      </div>
-    </div>
-  </div>
+      <%@include file="/reusables/filter.jspf" %>
 
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
 
-      <div class="table-responsive">
+          <table id="myTable" class="table table-bordered table-striped table-hover">
 
-        <table id="myTable" class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+              <th>Rank</th>
+              <th class="one">AFM</th>
+              <th class="two">Name</th>
+              <th>Surname</th>
+              <th>Vote</th>
+            </tr>
+            </thead>
 
-          <thead>
-          <tr>
-            <th>Rank</th>
-            <th class="one">AFM</th>
-            <th class="two">Name</th>
-            <th>Surname</th>
-            <th>Vote</th>
-          </tr>
-          </thead>
+            <tbody>
 
-          <tbody>
-          <%
-            for (int i = 0; i < list.size(); i++) {
-              Candidate c = list.get(i);
-          %>
-          <tr id="row-<%=i%>">
-            <td>
-              <%=i + 1%>
-            </td>
-            <td class="one">
-              <%=c.getAfm()%>
-            </td>
-            <td class="two">
-              <%=c.getName()%>
-            </td>
-            <td>
-              <%=c.getSurname()%>
-            </td>
-            <td>
-              <p data-placement="top" data-toggle="tooltip" title="vote">
-                <%=c.getVotes()%>
-              </p>
-            </td>
-          </tr>
-          <%
-            }
-          %>
+            <c:forEach var="i" begin="0" end="${list.size() - 1}">
+              <tr>
+                <td>
+                    ${i + 1}
+                </td>
+                <td class="one">
+                    ${list[i].afm}
+                </td>
+                <td class="two">
+                    ${list[i].name}
+                </td>
+                <td>
+                    ${list[i].surname}
+                </td>
+                <td>
+                  <p data-placement="top" data-toggle="tooltip" title="vote">
+                      ${list[i].votes}
+                  </p>
+                </td>
+              </tr>
+            </c:forEach>
 
-          </tbody>
-        </table>
+            </tbody>
+          </table>
 
-        <%
-        } else {
-        %>
-        <div class="container">
-          <h1 class="text-center text-danger col-md-6 col-md-offset-3"
-              style="background-color: rgba(0,0,0,0.5)">
-            <strong>Nobody has been voted yet!</strong>
-          </h1>
         </div>
-        <%
-          }
-        %>
-
-        <div class="clearfix"></div>
       </div>
 
-    </div>
-  </div>
+    </c:when>
+    <c:otherwise>
+
+      <c:set var="error" scope="page" value="Nobody has been voted yet!"/>
+
+      <%@include file="/reusables/error.jspf" %>
+
+    </c:otherwise>
+  </c:choose>
+
 </div>
 
-<script src="${pageContext.request.contextPath}/js/script.js"></script>
+<%@include file="/reusables/footer.jspf" %>
 
 </body>
 

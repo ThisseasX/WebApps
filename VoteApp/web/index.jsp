@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: thiss
@@ -9,26 +10,14 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>VoteApp - Login</title>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"> -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-          integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-          crossorigin="anonymous"></script>
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css"/>
+  <%@include file="/reusables/header.jspf" %>
 </head>
 
 <body>
 
 
-<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -39,7 +28,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="${pageContext.request.contextPath}/login">#NerdElections</a>
+      <a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp">#NerdElections</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -73,14 +62,7 @@
 
 <div class="container-fluid bg">
 
-  <div class="row">
-    <div class="jumbotron">
-      <div class="container col-md-8 col-md-offset-2"
-           style="background-color: rgba(0,0,0,0.5); margin-top: 20px;">
-        <h1 style="margin: 10px">Nerd Elections 2018</h1>
-      </div>
-    </div>
-  </div>
+  <%@include file="/reusables/jumbotron.jspf" %>
 
   <div class="row">
     <div class="panel panel-login col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3" style="margin-top: 50px">
@@ -102,7 +84,7 @@
         <div class="row">
           <div class="col-lg-12">
 
-            <form id="login-form" action="login" method="post" role="form" style="display: block;">
+            <form id="login-form" action="login" method="post" style="display: block;">
 
               <div class="form-group">
                 <input pattern="[0-9]{1,15}" required type="number" name="login-afm" id="login-afm" tabindex="1"
@@ -125,7 +107,7 @@
 
             </form>
 
-            <form id="register-form" action="register" method="post" role="form" style="display: none;">
+            <form id="register-form" action="register" method="post" style="display: none;">
 
               <div class="form-group">
                 <input pattern="[0-9]{1,15}" required type="number" name="register-afm" id="register-afm" tabindex="1"
@@ -134,12 +116,12 @@
               </div>
 
               <div class="form-group">
-                <input pattern="[A-Za-z]{1,30}" required type="text" name="name" id="name" tabindex="2"
+                <input pattern="[A-Za-z]{1,30}" required name="name" id="name" tabindex="2"
                        class="form-control" placeholder="Name">
               </div>
 
               <div class="form-group">
-                <input pattern="[A-Za-z]{1,30}" required type="text" name="surname" id="surname" tabindex="2"
+                <input pattern="[A-Za-z]{1,30}" required name="surname" id="surname" tabindex="2"
                        class="form-control"
                        placeholder="Surname">
               </div>
@@ -169,27 +151,25 @@
     </div>
   </div>
 
-  <%
-    String error = (String) request.getAttribute("error");
-    if (error != null) {
-  %>
-  <div id="error" class="row">
-    <div class="container col-md-2 col-md-offset-5" style="background-color: rgba(0,0,0,0.5); margin-top: 0;">
-      <h3 class="text-center" style="color: red">
-        <strong>
-          <%= error %>
-        </strong>
-      </h3>
+  <c:catch>
+    <jsp:useBean id="error" scope="request" type="java.lang.String"/>
+  </c:catch>
+  <c:if test="${error ne null}">
+
+    <div id="error" class="row">
+      <div class="container col-md-2 col-md-offset-5" style="background-color: #f00; margin-top: 0;">
+        <h3 class="text-center" style="color: white; margin: 10px">
+          <strong>${error}</strong>
+        </h3>
+      </div>
     </div>
-  </div>
-  <%
-    }
-  %>
+
+  </c:if>
 
 </div>
-<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-<script src="${pageContext.request.contextPath}/js/script.js"></script>
+
+<%@include file="/reusables/footer.jspf" %>
+
 </body>
 
 </html>

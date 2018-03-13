@@ -1,13 +1,5 @@
 package models;
 
-import utils.DBUtils;
-
-import javax.naming.NamingException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 @SuppressWarnings("unused")
 public class Voter {
 

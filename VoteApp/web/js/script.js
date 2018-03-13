@@ -1,5 +1,7 @@
 $(function () {
 
+    activateNav();
+
     $('#login-form-link').click(function (e) {
         $("#login-form").delay(100).fadeIn(100);
         $("#register-form").fadeOut(100);
@@ -18,8 +20,8 @@ $(function () {
         e.preventDefault();
     });
 
-    var password = document.getElementById("register-password");
-    var confirm_password = document.getElementById("confirm-password");
+    let password = document.getElementById("register-password");
+    let confirm_password = document.getElementById("confirm-password");
 
     function validatePassword() {
         if (password.value !== confirm_password.value) {
@@ -43,13 +45,13 @@ function post(path, params, method) {
 
     // The rest of this code assumes you are not using a library.
     // It can be made less wordy if you use one.
-    var form = document.createElement("form");
+    let form = document.createElement("form");
     form.setAttribute("method", method);
     form.setAttribute("action", path);
 
-    for (var key in params) {
+    for (let key in params) {
         if (params.hasOwnProperty(key)) {
-            var hiddenField = document.createElement("input");
+            let hiddenField = document.createElement("input");
             hiddenField.setAttribute("type", "hidden");
             hiddenField.setAttribute("name", key);
             hiddenField.setAttribute("value", params[key]);
@@ -64,7 +66,7 @@ function post(path, params, method) {
 
 function myFilter() {
     // Declare variables
-    var input, filter, table, tr, td, i;
+    let input, filter, table, tr, td, i;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     table = document.getElementById("myTable");
@@ -72,8 +74,8 @@ function myFilter() {
 
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-        var elements = tr[i].getElementsByTagName("td");
-        var surnameIndex = elements.length - 2;
+        let elements = tr[i].getElementsByTagName("td");
+        let surnameIndex = elements.length - 2;
         td = elements[surnameIndex];
         if (td) {
             if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
@@ -83,4 +85,17 @@ function myFilter() {
             }
         }
     }
+}
+
+function activateNav() {
+    let path = window.location.pathname;
+    path = path.replace(/\/$/, "");
+    path = decodeURIComponent(path);
+
+    $(".nav a").each(function () {
+        let href = $(this).attr('href');
+        if (path.substring(0, href.length) === href) {
+            $(this).closest('li').addClass('active');
+        }
+    });
 }

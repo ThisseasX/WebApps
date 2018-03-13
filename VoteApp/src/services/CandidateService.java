@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("WeakerAccess")
 public class CandidateService {
 
     static final String SQL_CANDIDATE = "candidates.c_afm, c_name, c_surname";

@@ -55,6 +55,7 @@ public class VoterService {
         return false;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static boolean canVote(String afm) {
         String sql = "SELECT count(*) FROM votes WHERE v_afm = ?";
 
