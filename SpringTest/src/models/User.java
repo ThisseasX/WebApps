@@ -1,8 +1,12 @@
 package models;
 
+import javax.validation.constraints.Size;
+
 public class User {
 
+    @Size(message = "Your Username must not exceed 10 characters!", max = 10)
     private String username;
+    @Size(message = "Your Password must not exceed 10 characters!", max = 10)
     private String password;
 
     public String getUsername() {
