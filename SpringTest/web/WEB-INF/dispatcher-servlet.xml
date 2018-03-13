@@ -7,6 +7,9 @@
 
     <mvc:annotation-driven/>
     <context:component-scan base-package="controllers"/>
+    <context:component-scan base-package="validators"/>
+
+    <bean id="userValidator" class="validators.UserValidator"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
