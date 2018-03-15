@@ -1,11 +1,13 @@
 package controllers;
 
 import entities.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import services.UserService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -16,14 +18,22 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
+    private UserService service;
+
+    @Autowired
+    public void setService(UserService service) {
+        this.service = service;
+    }
+
     @GetMapping("/all")
     public String testMethod(ModelMap m) {
-        EntityManager em = Persistence
-                .createEntityManagerFactory("DBTest")
-                .createEntityManager();
-        List<UserEntity> list = em
-                .createNamedQuery(UserEntity.GET_ALL, UserEntity.class)
-                .getResultList();
+//        EntityManager em = Persistence
+//                .createEntityManagerFactory("DBTest")
+//                .createEntityManager();
+//        List<UserEntity> list = em
+//                .createNamedQuery(UserEntity.GET_ALL, UserEntity.class)
+//                .getResultList();
+        List<UserEntity> list = service.getUsers();
         m.addAttribute("result_list", list);
         return "users";
     }

@@ -3,12 +3,13 @@
 
     <persistence-unit name="DBTest" transaction-type="RESOURCE_LOCAL">
 
-        <non-jta-data-source>java:comp/env/jdbc/DBTest</non-jta-data-source>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <non-jta-data-source>java:jboss/datasources/DBTest</non-jta-data-source>
         <class>entities.UserEntity</class>
 
-        <properties>
-            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
-        </properties>
+        <!--<properties>-->
+            <!--<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>-->
+        <!--</properties>-->
 
     </persistence-unit>
 

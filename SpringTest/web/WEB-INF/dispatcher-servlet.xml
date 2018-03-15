@@ -12,18 +12,31 @@
 
     <mvc:annotation-driven/>
     <context:component-scan base-package="controllers"/>
+    <context:component-scan base-package="services"/>
     <context:component-scan base-package="validators"/>
 
     <bean id="userValidator" class="validators.UserValidator"/>
 
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="messageSource"
-          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="message"/>
+    <!--<bean id="messageSource"-->
+    <!--class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
+    <!--<property name="basename" value="message"/>-->
+    <!--</bean>-->
+
+    <bean id="userService" class="services.UserService"/>
+    <!--<bean class="controllers.UserController">-->
+        <!--<property name="service" ref="userService"/>-->
+    <!--</bean>-->
+
+    <bean id="springJPA" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:jboss/datasources/DBTest" />
+    </bean>
+    <bean id="em" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="springJPA"/>
     </bean>
 
 </beans>
