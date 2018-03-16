@@ -38,7 +38,6 @@
   </c:when>
 
   <c:otherwise>
-
     <c:choose>
 
       <c:when test="${result != null}">
@@ -52,7 +51,6 @@
       </c:otherwise>
 
     </c:choose>
-
   </c:otherwise>
 
 </c:choose>

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @NamedQueries({
         @NamedQuery(name = UserEntity.GET_ALL, query = "SELECT u FROM UserEntity u"),
-        @NamedQuery(name = UserEntity.GET_BY_ID, query = "SELECT u FROM UserEntity u WHERE id = :id")
+        @NamedQuery(name = UserEntity.GET_BY_ID, query = "SELECT u FROM UserEntity u WHERE u.id = :id")
 })
 @Entity
 @Table(name = "user_test", schema = "dbtest")
@@ -19,6 +19,7 @@ public class UserEntity {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }

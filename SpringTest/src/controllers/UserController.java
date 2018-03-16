@@ -6,53 +6,44 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import services.UserService;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 import java.util.List;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService service;
+    private final UserService service;
 
     @Autowired
-    public void setService(UserService service) {
+    public UserController(UserService service) {
         this.service = service;
     }
 
     @GetMapping("/all")
-    public String testMethod(ModelMap m) {
-//        EntityManager em = Persistence
-//                .createEntityManagerFactory("DBTest")
-//                .createEntityManager();
-//        List<UserEntity> list = em
-//                .createNamedQuery(UserEntity.GET_ALL, UserEntity.class)
-//                .getResultList();
-        List<UserEntity> list = service.getUsers();
+    public String getAll(ModelMap m) {
+        List<UserEntity> list = service.getAll();
         m.addAttribute("result_list", list);
         return "users";
     }
 
     @GetMapping("/{id}")
-    public String search(ModelMap m, @PathVariable int id) {
-        EntityManager em = Persistence
-                .createEntityManagerFactory("DBTest")
-                .createEntityManager();
-        UserEntity user = null;
-        try {
-            user = em
-                    .createNamedQuery(UserEntity.GET_BY_ID, UserEntity.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            e.printStackTrace();
-        }
+    public String getById(ModelMap m, @PathVariable int id) {
+        UserEntity user = service.getById(id);
         m.addAttribute("result", user);
+        return "users";
+    }
+
+    @PostMapping("/insert")
+    public String insert(ModelMap m) {
+        UserEntity u = new UserEntity();
+        u.setName("Thiss");
+        u.setSurname("Xan");
+        service.insert(u);
+        m.addAttribute("result", u);
         return "users";
     }
 }

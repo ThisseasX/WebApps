@@ -2,41 +2,54 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <mvc:annotation-driven/>
-    <context:component-scan base-package="controllers"/>
-    <context:component-scan base-package="services"/>
-    <context:component-scan base-package="validators"/>
+    <tx:annotation-driven/>
 
-    <bean id="userValidator" class="validators.UserValidator"/>
+    <context:component-scan base-package="controllers"/>
+    <context:component-scan base-package="entities"/>
+    <context:component-scan base-package="services"/>
+
+    <bean id="userService" class="services.UserService"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="prefix" value="/WEB-INF/jsp"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!--<bean id="messageSource"-->
-    <!--class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
-    <!--<property name="basename" value="message"/>-->
-    <!--</bean>-->
-
-    <bean id="userService" class="services.UserService"/>
-    <!--<bean class="controllers.UserController">-->
-        <!--<property name="service" ref="userService"/>-->
-    <!--</bean>-->
-
-    <bean id="springJPA" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:jboss/datasources/DBTest" />
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:jboss/datasources/DBTest"/>
+        <property name="expectedType" value="javax.sql.DataSource"/>
     </bean>
+
     <bean id="em" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="dataSource" ref="springJPA"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="entities"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <!--suppress SpringModelInspection -->
+        <property name="basename" value="/WEB-INF/res/message"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
 </beans>
