@@ -16,6 +16,7 @@
 </head>
 
 <body>
+
 <c:catch>
   <jsp:useBean id="voter" scope="session" type="models.Voter"/>
 </c:catch>
