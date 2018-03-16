@@ -17,6 +17,14 @@ public class UserEntity {
     private String name;
     private String surname;
 
+    public UserEntity() {
+    }
+
+    public UserEntity(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

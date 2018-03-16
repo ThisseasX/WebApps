@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import services.UserService;
 
@@ -37,11 +36,9 @@ public class UserController {
         return "users";
     }
 
-    @PostMapping("/insert")
-    public String insert(ModelMap m) {
-        UserEntity u = new UserEntity();
-        u.setName("Thiss");
-        u.setSurname("Xan");
+    @GetMapping("/insert/{name}/{surname}")
+    public String insert(ModelMap m, @PathVariable String name, @PathVariable String surname) {
+        UserEntity u = new UserEntity(name, surname);
         service.insert(u);
         m.addAttribute("result", u);
         return "users";
