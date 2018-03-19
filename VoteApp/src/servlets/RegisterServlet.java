@@ -35,7 +35,7 @@ public class RegisterServlet extends HttpServlet {
             rd.forward(request, response);
         } else {
             request.setAttribute("error", "Registration Failed");
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
             rd.forward(request, response);
         }
     }

@@ -23,7 +23,7 @@
 
 <c:choose>
   <c:when test="${voter eq null}">
-    <c:redirect url="/index.jsp"/>
+    <c:redirect url="/home.jsp"/>
   </c:when>
   <c:otherwise>
     <c:set var="list" scope="page" value="${f:getAvailableCandidates(voter)}"/>

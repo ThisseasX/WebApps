@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
             rd.forward(request, response);
         } else {
             request.setAttribute("error", "Login Failed");
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
             rd.forward(request, response);
         }
     }

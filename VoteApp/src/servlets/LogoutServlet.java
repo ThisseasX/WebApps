@@ -18,7 +18,7 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session != null)
             session.invalidate();
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/home.jsp").forward(request, response);
     }
 
     @Override
