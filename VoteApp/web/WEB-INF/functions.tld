@@ -44,7 +44,7 @@
     <function>
         <name>vote</name>
         <function-class>services.VoterService</function-class>
-        <function-signature>boolean vote(java.lang.String,java.lang.String,int)</function-signature>
+        <function-signature>void vote(java.lang.String,java.lang.String,int)</function-signature>
     </function>
 
     <function>

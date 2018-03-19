@@ -75,7 +75,7 @@ public class VoterService {
         return false;
     }
 
-    public static boolean vote(String v_afm, String c_afm, int vote) {
+    public static void vote(String v_afm, String c_afm, int vote) {
         if (canVote(v_afm)) {
             String sql = "INSERT INTO votes VALUES(?,?,?,?)";
 
@@ -90,13 +90,12 @@ public class VoterService {
                 ps.setString(2, c_afm);
                 ps.setString(3, date);
                 ps.setInt(4, vote);
-                return ps.executeUpdate() > 0;
+                ps.executeUpdate();
 
             } catch (SQLException | NamingException e) {
                 e.printStackTrace();
             }
         }
-        return false;
     }
 
     public static List<Candidate> getVoteHistory(Voter v) {
