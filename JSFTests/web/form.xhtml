@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--suppress XmlDefaultAttributeValue -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</h:head>
+<f:view>
+    <h:form styleClass="text-center" style="margin-top: 10px; margin-bottom: 10px">
+        <h:inputText value="${salesBean.startDate}">
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+        </h:inputText>
+        <h:inputText value="${salesBean.endDate}">
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+        </h:inputText>
+        <h:commandButton action="${salesBean.fetchSales()}" value="Search"/>
+    </h:form>
+
+    <div class="container-fluid bg">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+
+                <h:dataTable value="${salesBean.sales}" var="sale" rendered="${salesBean.sales.size() > 0}"
+                             styleClass="table table-bordered table-striped table-hover">
+
+                    <h:column>
+                        <f:facet name="header">ID</f:facet>
+                        ${sale.sid}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Quantity</f:facet>
+                        ${sale.quantity}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Date</f:facet>
+                        ${sale.date}
+                    </h:column>
+
+                </h:dataTable>
+
+            </div>
+        </div>
+    </div>
+
+</f:view>
+</html>
