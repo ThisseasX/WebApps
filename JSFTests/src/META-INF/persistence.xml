@@ -4,9 +4,11 @@
 
     <persistence-unit name="JSFPU">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <jta-data-source>java:jboss/datasources/JSF</jta-data-source>
-        <class>entities.Products</class>
-        <class>entities.Sales</class>
+        <non-jta-data-source>java:jboss/datasources/JSF</non-jta-data-source>
+        <class>entities.Product</class>
+        <class>entities.Sale</class>
+        <class>entities.Role</class>
+        <class>entities.User</class>
     </persistence-unit>
 
 </persistence>

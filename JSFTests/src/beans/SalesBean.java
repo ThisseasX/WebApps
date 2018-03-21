@@ -1,6 +1,6 @@
 package beans;
 
-import entities.Sales;
+import entities.Sale;
 import sessionbeans.SalesEJB;
 
 import javax.ejb.EJB;
@@ -16,12 +16,12 @@ public class SalesBean {
 
     private Date startDate;
     private Date endDate;
-    private List<Sales> sales;
+    private List<Sale> sales;
 
     @EJB
     private SalesEJB salesEJB;
 
-    public List<Sales> fetchSales() {
+    public List<Sale> fetchSales() {
         this.sales = salesEJB.getSales(startDate, endDate);
         return sales;
     }
@@ -42,11 +42,11 @@ public class SalesBean {
         this.endDate = endDate;
     }
 
-    public List<Sales> getSales() {
+    public List<Sale> getSales() {
         return sales;
     }
 
-    public void setSales(List<Sales> sales) {
+    public void setSales(List<Sale> sales) {
         this.sales = sales;
     }
 }

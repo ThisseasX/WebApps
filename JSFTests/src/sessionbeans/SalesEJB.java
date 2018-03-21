@@ -1,6 +1,6 @@
 package sessionbeans;
 
-import entities.Sales;
+import entities.Sale;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -9,16 +9,15 @@ import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("unused")
-@Stateless(name = "SalesEJB")
+@Stateless
 public class SalesEJB {
 
     @PersistenceContext(unitName = "JSFPU")
     private EntityManager em;
 
-    public List<Sales> getSales(Date startDate, Date endDate) {
-
+    public List<Sale> getSales(Date startDate, Date endDate) {
         return em
-                .createQuery("select s from Sales s where s.date between :startDate and :endDate", Sales.class)
+                .createQuery("select s from Sale s where s.date between :startDate and :endDate", Sale.class)
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate)
                 .getResultList();

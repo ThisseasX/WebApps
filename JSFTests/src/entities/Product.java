@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Products {
+public class Product {
 
     private int pid;
     private String name;
@@ -36,10 +36,10 @@ public class Products {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Products products = (Products) o;
+        Product product = (Product) o;
 
-        return pid == products.pid &&
-                (name != null ? name.equals(products.name) : products.name == null);
+        return pid == product.pid &&
+                (name != null ? name.equals(product.name) : product.name == null);
     }
 
     @Override

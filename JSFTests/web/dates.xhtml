@@ -9,14 +9,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </h:head>
 <f:view>
-    <h:form styleClass="text-center" style="margin-top: 10px; margin-bottom: 10px">
-        <h:inputText value="${salesBean.startDate}">
-            <f:convertDateTime pattern="yyyy-MM-dd"/>
-        </h:inputText>
-        <h:inputText value="${salesBean.endDate}">
-            <f:convertDateTime pattern="yyyy-MM-dd"/>
-        </h:inputText>
-        <h:commandButton action="${salesBean.fetchSales()}" value="Search"/>
+    <h:form styleClass="text-right">
+        <h:panelGrid columns="2" style="margin: 10px auto">
+
+            <h:outputLabel for="startDate">Start Date:</h:outputLabel>
+            <h:inputText value="${salesBean.startDate}" id="startDate">
+                <f:convertDateTime for="startDate" pattern="yyyy-MM-dd"/>
+            </h:inputText>
+
+            <h:outputLabel for="endDate">End Date:</h:outputLabel>
+            <h:inputText value="${salesBean.endDate}" id="endDate">
+                <f:convertDateTime for="endDate" pattern="yyyy-MM-dd"/>
+            </h:inputText>
+
+            <h:commandButton action="${salesBean.fetchSales()}" value="Search"/>
+
+        </h:panelGrid>
     </h:form>
 
     <div class="container-fluid bg">

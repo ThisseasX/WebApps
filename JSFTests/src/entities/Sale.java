@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class Sales {
+public class Sale {
 
     private int sid;
     private Integer quantity;
@@ -48,11 +48,11 @@ public class Sales {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Sales sales = (Sales) o;
+        Sale sale = (Sale) o;
 
-        return sid == sales.sid &&
-                (quantity != null ? quantity.equals(sales.quantity) : sales.quantity == null) &&
-                (date != null ? date.equals(sales.date) : sales.date == null);
+        return sid == sale.sid &&
+                (quantity != null ? quantity.equals(sale.quantity) : sale.quantity == null) &&
+                (date != null ? date.equals(sale.date) : sale.date == null);
     }
 
     @Override

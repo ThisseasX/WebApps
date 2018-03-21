@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--suppress XmlDefaultAttributeValue -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</h:head>
+<f:view>
+    <h:form styleClass="text-right" id="form">
+        <h:panelGrid columns="3" style="margin: 10px auto">
+
+            <h:outputLabel for="id" style="margin-right: 8px">ID</h:outputLabel>
+            <h:inputText value="#{registerBean.id}" id="id"/>
+            <h:message for="id" id="eid"/>
+
+            <h:outputLabel for="username" style="margin-right: 8px">Username</h:outputLabel>
+            <h:inputText value="#{registerBean.username}" id="username"/>
+            <h:message for="id" id="eusername"/>
+
+            <h:outputLabel for="password" style="margin-right: 8px">Password</h:outputLabel>
+            <h:inputText value="#{registerBean.password}" id="password"/>
+            <h:message for="id" id="epassword"/>
+
+            <h:outputLabel for="passwordConfirm" style="margin-right: 8px">Confirm Password</h:outputLabel>
+            <h:inputText value="#{registerBean.passwordConfirm}" id="passwordConfirm"/>
+            <h:message for="id" id="epasswordConfirm"/>
+
+            <h:outputLabel for="name" style="text-transform: capitalize; margin-right: 8px">Name</h:outputLabel>
+            <h:inputText value="#{registerBean.name}" id="name"/>
+            <h:message for="id" id="ename"/>
+
+            <h:outputLabel for="surname" style="text-transform: capitalize; margin-right: 8px">Surname</h:outputLabel>
+            <h:inputText value="#{registerBean.surname}" id="surname"/>
+            <h:message for="id" id="esurname"/>
+
+            <h:selectOneMenu value="#{registerBean.selectedRole}" converter="RoleConverter">
+                <f:selectItems value="#{registerBean.availableRoles}"
+                               var="r" itemValue="#{r}" itemLabel="#{r.name}"/>
+            </h:selectOneMenu>
+
+            <h:commandButton style="margin-right: 8px" action="#{registerBean.register()}" value="Search"/>
+
+        </h:panelGrid>
+    </h:form>
+
+</f:view>
+</html>
