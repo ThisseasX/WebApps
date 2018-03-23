@@ -1,10 +1,11 @@
 package beans;
 
 import entities.Sale;
-import sessionbeans.SalesEJB;
+import sessionbeans.SaleEJB;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import java.util.Date;
 import java.util.List;
@@ -12,18 +13,17 @@ import java.util.List;
 @SuppressWarnings("unused")
 @ManagedBean
 @SessionScoped
-public class SalesBean {
+public class SaleBean {
 
     private Date startDate;
     private Date endDate;
     private List<Sale> sales;
 
     @EJB
-    private SalesEJB salesEJB;
+    private SaleEJB saleEJB;
 
     public List<Sale> fetchSales() {
-        this.sales = salesEJB.getSales(startDate, endDate);
-        return sales;
+        return this.sales = saleEJB.getSales(startDate, endDate);
     }
 
     public Date getStartDate() {

@@ -2,10 +2,11 @@ package beans;
 
 import entities.Role;
 import entities.User;
-import sessionbeans.RegisterEJB;
+import sessionbeans.UserEJB;
+import utils.HashingUtils;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @ManagedBean
 @SessionScoped
-public class RegisterBean {
+public class UserBean {
 
     private String id;
     private String username;
@@ -25,26 +26,44 @@ public class RegisterBean {
 
     private Role selectedRole;
 
-    private List<Role> availableRoles;
-
     @EJB
-    private RegisterEJB registerEJB;
+    private UserEJB userEJB;
 
-    @PostConstruct
-    public void init() {
-        availableRoles = registerEJB.fetchAllRoles();
+//    @PostConstruct
+//    public void init() {
+//        availableRoles = userEJB.fetchAllRoles();
+//        users = userEJB.fetchAllUsers();
+//    }
+
+    public List<Role> fetchAllRoles() {
+        return userEJB.fetchAllRoles();
     }
 
-    public void register() {
-        User u = new User(
-                Integer.parseInt(id),
-                username,
-                password,
-                name,
-                surname,
-                selectedRole
-        );
-        registerEJB.register(u);
+    public List<User> fetchAllUsers() {
+        return userEJB.fetchAllUsers();
+    }
+
+    public String register() {
+        if (password.equals(passwordConfirm)) {
+            User u = new User(
+                    Integer.parseInt(id),
+                    username,
+                    HashingUtils.hashPass(password),
+                    name,
+                    surname,
+                    selectedRole
+            );
+            try {
+                userEJB.register(u);
+            } catch (EJBTransactionRolledbackException e) {
+                e.printStackTrace();
+                return "index";
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Passwords don't match!"));
+            return "index";
+        }
+        return "users";
     }
 
     public String getId() {
@@ -53,14 +72,6 @@ public class RegisterBean {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public RegisterEJB getRegisterEJB() {
-        return registerEJB;
-    }
-
-    public void setRegisterEJB(RegisterEJB registerEJB) {
-        this.registerEJB = registerEJB;
     }
 
     public String getUsername() {
@@ -109,13 +120,5 @@ public class RegisterBean {
 
     public void setSelectedRole(Role selectedRole) {
         this.selectedRole = selectedRole;
-    }
-
-    public List<Role> getAvailableRoles() {
-        return availableRoles;
-    }
-
-    public void setAvailableRoles(List<Role> availableRoles) {
-        this.availableRoles = availableRoles;
     }
 }

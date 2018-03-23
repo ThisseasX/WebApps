@@ -10,7 +10,7 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 @Stateless
-public class SalesEJB {
+public class SaleEJB {
 
     @PersistenceContext(unitName = "JSFPU")
     private EntityManager em;

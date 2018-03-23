@@ -13,16 +13,16 @@
         <h:panelGrid columns="2" style="margin: 10px auto">
 
             <h:outputLabel for="startDate">Start Date:</h:outputLabel>
-            <h:inputText value="${salesBean.startDate}" id="startDate">
+            <h:inputText value="${saleBean.startDate}" id="startDate">
                 <f:convertDateTime for="startDate" pattern="yyyy-MM-dd"/>
             </h:inputText>
 
             <h:outputLabel for="endDate">End Date:</h:outputLabel>
-            <h:inputText value="${salesBean.endDate}" id="endDate">
+            <h:inputText value="${saleBean.endDate}" id="endDate">
                 <f:convertDateTime for="endDate" pattern="yyyy-MM-dd"/>
             </h:inputText>
 
-            <h:commandButton action="${salesBean.fetchSales()}" value="Search"/>
+            <h:commandButton action="${saleBean.fetchSales()}" value="Search"/>
 
         </h:panelGrid>
     </h:form>
@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
 
-                <h:dataTable value="${salesBean.sales}" var="sale" rendered="${salesBean.sales.size() > 0}"
+                <h:dataTable value="${saleBean.sales}" var="sale" rendered="${saleBean.sales.size() > 0}"
                              styleClass="table table-bordered table-striped table-hover">
 
                     <h:column>

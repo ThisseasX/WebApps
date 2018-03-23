@@ -13,35 +13,37 @@
         <h:panelGrid columns="3" style="margin: 10px auto">
 
             <h:outputLabel for="id" style="margin-right: 8px">ID</h:outputLabel>
-            <h:inputText value="#{registerBean.id}" id="id"/>
+            <h:inputText value="#{userBean.id}" id="id"/>
             <h:message for="id" id="eid"/>
 
             <h:outputLabel for="username" style="margin-right: 8px">Username</h:outputLabel>
-            <h:inputText value="#{registerBean.username}" id="username"/>
+            <h:inputText value="#{userBean.username}" id="username"/>
             <h:message for="id" id="eusername"/>
 
             <h:outputLabel for="password" style="margin-right: 8px">Password</h:outputLabel>
-            <h:inputText value="#{registerBean.password}" id="password"/>
+            <h:inputSecret value="#{userBean.password}" id="password"/>
             <h:message for="id" id="epassword"/>
 
             <h:outputLabel for="passwordConfirm" style="margin-right: 8px">Confirm Password</h:outputLabel>
-            <h:inputText value="#{registerBean.passwordConfirm}" id="passwordConfirm"/>
+            <h:inputSecret value="#{userBean.passwordConfirm}" id="passwordConfirm"/>
             <h:message for="id" id="epasswordConfirm"/>
 
             <h:outputLabel for="name" style="text-transform: capitalize; margin-right: 8px">Name</h:outputLabel>
-            <h:inputText value="#{registerBean.name}" id="name"/>
+            <h:inputText value="#{userBean.name}" id="name"/>
             <h:message for="id" id="ename"/>
 
             <h:outputLabel for="surname" style="text-transform: capitalize; margin-right: 8px">Surname</h:outputLabel>
-            <h:inputText value="#{registerBean.surname}" id="surname"/>
+            <h:inputText value="#{userBean.surname}" id="surname"/>
             <h:message for="id" id="esurname"/>
 
-            <h:selectOneMenu value="#{registerBean.selectedRole}" converter="RoleConverter">
-                <f:selectItems value="#{registerBean.availableRoles}"
+            <h:selectOneMenu value="#{userBean.selectedRole}" converter="RoleConverter">
+                <f:selectItems value="#{userBean.fetchAllRoles()}"
                                var="r" itemValue="#{r}" itemLabel="#{r.name}"/>
             </h:selectOneMenu>
 
-            <h:commandButton style="margin-right: 8px" action="#{registerBean.register()}" value="Search"/>
+            <h:commandButton style="margin-right: 8px" action="#{userBean.register()}" value="Register"/>
+
+            <h:messages globalOnly="true"/>
 
         </h:panelGrid>
     </h:form>

@@ -2,6 +2,7 @@ package entities;
 
 import javax.persistence.*;
 
+@NamedQuery(name = "User.getAll", query = "SELECT u FROM User u")
 @Entity
 public class User {
 

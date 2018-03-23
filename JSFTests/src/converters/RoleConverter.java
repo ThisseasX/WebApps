@@ -1,6 +1,6 @@
 package converters;
 
-import beans.RegisterBean;
+import beans.UserBean;
 import entities.Role;
 
 import javax.faces.component.UIComponent;
@@ -20,20 +20,14 @@ public class RoleConverter implements Converter {
 
 //        List<Role> list = registerEJB.fetchAllRoles();
 
-        RegisterBean yourBean = facesContext
+        UserBean yourBean = facesContext
                 .getApplication()
                 .evaluateExpressionGet(
                         facesContext,
-                        "#{registerBean}",
-                        RegisterBean.class);
+                        "#{userBean}",
+                        UserBean.class);
 
-        List<Role> list = yourBean.getAvailableRoles();
-
-//                Persistence
-//                        .createEntityManagerFactory("JSFPU")
-//                        .createEntityManager()
-//                        .createNamedQuery(Role.GET_ALL, Role.class)
-//                        .getResultList();
+        List<Role> list = yourBean.fetchAllRoles();
 
         System.out.println("STRING IS: " + s);
         return list.get(Integer.parseInt(s));

@@ -3,11 +3,9 @@ package entities;
 import javax.persistence.*;
 import java.util.Collection;
 
-@NamedQuery(name = Role.GET_ALL, query = "SELECT r FROM Role r")
+@NamedQuery(name = "Role.getAll", query = "SELECT r FROM Role r")
 @Entity
 public class Role {
-
-    public static final String GET_ALL = "getAll";
 
     private int rid;
     private String name;

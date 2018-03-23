@@ -10,7 +10,7 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 @Stateless
-public class RegisterEJB {
+public class UserEJB {
 
     @PersistenceContext(unitName = "JSFPU")
     private EntityManager em;
@@ -21,7 +21,13 @@ public class RegisterEJB {
 
     public List<Role> fetchAllRoles() {
         return em
-                .createNamedQuery(Role.GET_ALL, Role.class)
+                .createNamedQuery("Role.getAll", Role.class)
+                .getResultList();
+    }
+
+    public List<User> fetchAllUsers() {
+        return em
+                .createNamedQuery("User.getAll", User.class)
                 .getResultList();
     }
 }
