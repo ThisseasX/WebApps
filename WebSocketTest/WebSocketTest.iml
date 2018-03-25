@@ -28,8 +28,16 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="WebSocket-1.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.0.27" level="application_server_libraries" />
-    <orderEntry type="library" name="ejb-3.2" level="project" />
     <orderEntry type="library" name="jquery-3.3.1" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="JBoss 11.0.0.Final" level="application_server_libraries" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/javax.json-api-1.1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
