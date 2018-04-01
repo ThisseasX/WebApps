@@ -38,16 +38,6 @@
         <span class="input-group-btn"><button id="btn" class="btn btn-success" onclick="say()">Send</button></span>
       </div>
 
-      <%--<label style="padding-left: 15px; padding-right: 15px" for="message">Message</label>--%>
-      <%--<div class="form-row">--%>
-      <%--<div class="col-md-6">--%>
-      <%--<input class="form-control" id="message" name="message">--%>
-      <%--</div>--%>
-      <%--<div class="col-md-6">--%>
-      <%--<button  style="width: 100px" class="btn btn-success btn-large" id="btn" onclick="say()">Say</button>--%>
-      <%--</div>--%>
-      <%--</div>--%>
-
     </div>
 
   </div>
@@ -70,31 +60,8 @@
 </div>
 
 <script>
-    let socket = new WebSocket("ws://127.0.0.1:8080${pageContext.request.contextPath}/chat");
+    let socket = new WebSocket("ws://127.0.0.1:8082${pageContext.request.contextPath}/chat");
     socket.onmessage = onMessage;
-
-    //    socket.onopen = function (event) {
-    //        chat.innerHTML = 'Connected to: ' + event.currentTarget.url;
-    //        chat.className = 'open';
-    //    };
-    //
-    //    socket.onerror = function (error) {
-    //        chat.innerHTML += 'WebSocket Error: ' + error;
-    //    };
-    //
-    //    socket.onclose = function () {
-    //        chat.innerHTML += 'Disconnected from WebSocket.';
-    //    };
-
-//    let closeBtn = document.getElementById("btn1");
-//    closeBtn.onclick = function (e) {
-//        e.preventDefault();
-//
-//        // Close the WebSocket.
-//        socket.close();
-//
-//        return false;
-//    };
 
     let input = document.getElementById("message");
     let chat = document.getElementById("chat");
@@ -122,12 +89,6 @@
         tdr.appendChild(td3);
 
         chat.appendChild(tdr);
-
-//        chat.innerHTML += ('<tr>');
-//        chat.innerHTML += ('<td>' + id + '</td>');
-//        chat.innerHTML += ('<td>' + message.message + '</td>');
-//        chat.innerHTML += ('<td>' + message.time + '</td>');
-//        chat.innerHTML += ('</tr>');
     }
 
     function say() {

@@ -29,14 +29,6 @@ public class ChatEndpoint {
         Set<Session> sessions = sessionRegistry.getAll();
         for (Session s : sessions) {
             try {
-//                String myJSONString = "{'test': '100.00'}";
-//                JsonObject jsonObject = new JsonObject();
-//                jsonObject.addProperty("id", sender.getId());
-//                jsonObject.addProperty("message", message);
-//                jsonObject.addProperty("time", LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm")));
-//                s.getBasicRemote().sendObject(
-//                        new Gson().fromJson(myJSONString, JsonObject.class)
-//                );
                 JsonObject event = Json.createObjectBuilder()
                         .add("mes", message)
                         .add("id", sender.getId())
